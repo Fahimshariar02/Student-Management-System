@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Student List</h1>
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <td class="align-middle">Name</td>
+                        <td class="align-middle">Email</td>
+                        <td class="align-middle">Phone Number</td>
+                        <td class="align-middle">Course</td>
+                        <td class="align-middle">Actions</td>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    {% for student in students %}
+                    <tr>
+                        <td class="align-middle">{{ student.name }}</td>
+                        <td class="align-middle">{{ student.email }}</td>
+                        <td class="align-middle">{{ student.phone_number }}</td>
+                        <td class="align-middle">{{ student.course }}</td>
+                        
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center mx-auto col-10">
+                                <a href="{% url 'update' student.id %}" class="btn btn-primary btn-sm m-2">Edit</a>
+            
+                                <a href="{% url 'delete' student.id %}" class="btn btn-danger btn-sm m-2">Delete</a>
+                            </div>
+                            
+                        </td>
+                    </tr>
+
+                    {% if form.phone_number.errors %}
+                        {% for error in form.phone_number.errors %}
+                            <div class="alert alert-danger">{{ error }}</div> 
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <div class="alert alert-danger">{{ error }}</div> 
+                        {% endfor %}
+                    {% endif %}
+
+
+                    {% empty %}
+                    <h2 class="text-center">No Students Available.</h2>
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
